@@ -1,0 +1,52 @@
+/*
+    核心是先数组排序，当商店数量为偶数时，中间两家商店位置的终点就是货仓位置，奇数的话就是中间商店位置即为货仓位置
+*/
+写法1 O（logn）
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+
+const int MAX=100000;
+int num;
+int a[MAX];
+int main(){
+    cin>>num;
+    for(int i=0;i<num;i++){
+        cin>>a[i];
+    }
+    sort(a,a+num);
+    int res=0;
+    for(int i=0;i<num;i++){
+        res=res+abs(a[i]-a[num/2]);
+    }
+    cout<<res<<endl;
+    return 0;
+}
+//写法2
+//nth_element库函数用于求中位数，时间复杂度O（n）
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+
+const int MAX=100000;
+int num;
+int a[MAX];
+int main(){
+    cin>>num;
+    for(int i=0;i<num;i++){
+        cin>>a[i];
+    }
+    nth_element(a,a+num/2,a+num);
+    int res=0;
+    for(int i=0;i<num;i++){
+        res=res+abs(a[i]-a[num/2]);
+    }
+    cout<<res<<endl;
+    return 0;
+}
