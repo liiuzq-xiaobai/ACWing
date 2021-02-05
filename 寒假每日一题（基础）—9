@@ -1,0 +1,75 @@
+/*
+重载小于号
+*/
+/*#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+const int Max=305;
+int num;
+struct stu{
+    int sno;
+    int chinese;
+    int math;
+    int english;
+    int sum;
+    bool operator< (const stu& t)const
+    {
+        if(sum!=t.sum) return sum>t.sum;
+        if(chinese!=t.chinese) return chinese>t.chinese;
+        return sno<t.sno;
+    }
+}stu[Max];
+
+int main(){
+    cin>>num;
+    for(int i=1;i<=num;i++){
+        stu[i].sno=i;
+        cin>>stu[i].chinese>>stu[i].math>>stu[i].english;
+        stu[i].sum=stu[i].chinese+stu[i].math+stu[i].english;
+    }
+    sort(stu+1,stu+num+1);
+    for(int i=1;i<=5;i++){
+        cout<<stu[i].sno<<" "<<stu[i].chinese+stu[i].math+stu[i].english<<endl;
+    }
+}*/
+/*
+自定义比较函数
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+const int Max=305;
+int num;
+struct Stu{
+    int sno;
+    int chinese;
+    int math;
+    int english;
+    int sum;
+}stu[Max];
+
+bool cmp(Stu& a,Stu& b)
+{
+    if(a.sum!=b.sum) return a.sum>b.sum;
+    if(a.chinese!=b.chinese) return a.chinese>b.chinese;
+    return a.sno<b.sno;
+}
+
+int main(){
+    cin>>num;
+    for(int i=1;i<=num;i++){
+        stu[i].sno=i;
+        cin>>stu[i].chinese>>stu[i].math>>stu[i].english;
+        stu[i].sum=stu[i].chinese+stu[i].math+stu[i].english;
+    }
+    sort(stu+1,stu+num+1,cmp);
+    for(int i=1;i<=5;i++){
+        cout<<stu[i].sno<<" "<<stu[i].chinese+stu[i].math+stu[i].english<<endl;
+    }
+}
