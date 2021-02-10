@@ -1,0 +1,33 @@
+/*
+递推
+注意此题三个性质
+1.操作顺序无影响
+2.最左和最右的硬币只有一种情况会改变它的状态
+3.每个操作最多执行一次（当每个操作执行两次等于没有操作）
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+const int MAX=305;
+string a,b;
+
+int main(){
+    cin>>a>>b;
+    int count=0;
+    for(int i=0;i<a.size();i++){
+        if(a[i]!=b[i]){//翻转当前硬币和下一个硬币，count++
+            a[i]=b[i];
+            if(a[i+1]=='*'){
+                a[i+1]='o';
+            }else{
+                a[i+1]='*';
+            }
+            count++;
+        }
+    }
+    cout<<count<<endl;
+    return 0;
+}
