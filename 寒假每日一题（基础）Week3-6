@@ -1,0 +1,30 @@
+/*
+完全背包
+DP 递归式：a[i][j]=a[i-1][j-w[i]]+a[i-1][j-w[i]*2]+...
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+int V,N;
+const int MAX=10010;
+const int vmax=30;
+long long a[vmax][MAX];
+
+int main(){
+    cin>>V>>N;
+    a[0][0]=1;
+    for(int i=1;i<=V;i++){
+        int w;
+        cin>>w;
+        for(int j=0;j<=N;j++){
+            a[i][j]=a[i-1][j];
+            if(j>=w){
+                a[i][j]=a[i][j]+a[i][j-w];
+            }
+        }
+    }
+    cout<<a[V][N]<<endl;
+    return 0;
+}
