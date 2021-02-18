@@ -1,0 +1,38 @@
+/*
+枚举区间:可以从0到83（下窗口）逐次枚举，即所有山峰高度必在这个窗口内
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=1005;
+int N;
+int h[MAX];
+
+int main(){
+    cin>>N;
+    for(int i=0;i<N;i++){
+        cin>>h[i];
+    }
+    sort(h,h+N);
+    int low=h[0];
+    int high=h[N-1];
+    int res=INT_MAX;
+    for(int i=low;i<=high;i++){
+        int cost=0;
+        int top=i+17;//滑动窗口上界
+        for(int j=0;j<N;j++){
+            if(h[j]>top){
+                cost=cost+(h[j]-top)*(h[j]-top);
+            }
+            if(h[j]<i){
+                cost=cost+(i-h[j])*(i-h[j]);
+            }
+        }
+        if(cost<res){
+            res=cost;
+        }
+    }
+    cout<<res<<endl;
+    return 0;
+}
