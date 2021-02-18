@@ -1,0 +1,73 @@
+/*
+哈希表做法
+时间复杂度O（n）
+*/
+/*#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+#include <unordered_set>
+const int MAX=10000;
+int n,m;
+using namespace std;
+int main(){
+    cin>>n>>m;
+    unordered_set<int> hash;
+    int v1=MAX,v2;//存结果
+    for(int i=0;i<n;i++){
+        int a,b;
+        cin>>a;
+        b=m-a;
+        if(hash.count(b)){//判断当前输入的面值能否找到对应的配对面值，如果能找到
+            if(a>b){//判断两个面值大小，确定输出格式
+                swap(a,b);
+            }
+            if(a<v1){//判断当前较小面值是不是最小，如果是最小则更新v1和v2
+                  v1=a;
+                  v2=b;
+            }
+        }
+       hash.insert(a);//无论找没找到都要将a插入哈希表中
+    }
+    if(v1==MAX){
+        cout<<"No Solution"<<endl;//v1始终没更新说明一直没找到，则No Solution
+    }else{
+        cout<<v1<<" "<<v2<<endl;
+    }
+    return 0;
+}*/
+/*
+双指针
+先将输入的面值从小到大排序
+ai+aj<=M且j最大
+i指针从前往后走，j指针从后往前走，当两指针相遇，则这一轮查找中没有找到解，i指针后移一个开始新的循环查找，j从最后一个往前找
+若两者的和大于m，则j往前移动，如果找到对应解即输出
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+using namespace std;
+const int Max=100000;
+int n,m;
+int a[Max];
+
+int main(){
+    cin>>n>>m;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    sort(a,a+n);
+    int j=n-1;
+    for(int i=0,j=n-1;i<j;i++){
+        while(i<j&&a[i]+a[j]>m){
+            j--;
+        }
+        if(i<j&&a[i]+a[j]==m){
+            cout<<a[i]<<" "<<a[j]<<endl;
+            return 0;
+        }
+    }
+    cout<<"No Solution"<<endl;
+    return 0;
+}
