@@ -1,0 +1,39 @@
+/*
+打表题
+枚举每个月份的第一天，距离1900年过了多少天
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+int N;
+const int MAX=100000;
+int runmonth[13]={0,31,29,31,30,31,30,31,31,30,31,30,31};
+int pingmonth[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+int date[7];
+
+int main(){
+    cin>>N;
+    int ddate=0;//与date数组相对应0代表星期一依次往后推
+    for(int i=1900;i<1900+N;i++){
+        int flag=0;//0代表平年,1代表闰年
+        if(((i%4==0)&&(i%100!=0))||i%400==0){
+            flag=1;
+        }
+        if(flag==1){
+            for(int j=1;j<=12;j++){
+                date[(ddate+12)%7]++;//以每个月的第一天算起
+                ddate=ddate+runmonth[j];
+            }
+        }else{
+            for(int j=1;j<=12;j++){
+                date[(ddate+12)%7]++;
+                ddate=ddate+pingmonth[j];
+            }
+        }
+    }
+    for(int i=5,j=0;j<7;i=(i+1)%7,j++){
+        cout<<date[i]<<" ";
+    }
+}
