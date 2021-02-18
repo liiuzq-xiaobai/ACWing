@@ -1,0 +1,60 @@
+/*
+方法一：调用库函数next_permutition,这个函数每次将输入的排列更新一次下一个排列，12345->12354，一共要更新plus次
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=10010;
+int num,p;
+int w[MAX];
+
+int main(){
+    cin>>num>>p;
+    for(int i=0;i<num;i++){
+        cin>>w[i];
+    }
+    while(p--){
+        next_permutation(w,w+num);
+    }
+    for(int i=0;i<num;i++){
+        cout<<w[i]<<" ";
+    }
+    return 0;
+}
+/*
+手动实现next_permutition
+1.123654->124356为例，首先从最后一个数字往前探查找到第一个降序（6->3），此时调整6后面的排序已经不行，6后的顺序已经是当前最大排列
+2.把3需要往大调整一点，所以这时就需要从6开始向后找，找刚好比3大的数字，找到后交换他俩的位置
+3.将刚才3的位置后续从最小开始逐步往上排列，即653排成356，reverse一下即可
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=10010;
+int num,p;
+int w[MAX];
+
+int main(){
+    cin>>num>>p;
+    for(int i=0;i<num;i++){
+        cin>>w[i];
+    }
+    while(p--){
+        int k=num-1;
+        while(w[k]<w[k-1]){
+            k--;
+        }
+        int t=k;
+        while(w[t+1]>w[k-1]){
+            t++;
+        }
+        swap(w[k-1],w[t]);
+        reverse(w+k,w+num);
+    }
+    for(int i=0;i<num;i++){
+        cout<<w[i]<<" ";
+    }
+    return 0;
+}
