@@ -1,0 +1,40 @@
+/*
+阶乘分解
+核心思想：影响最后一位的是每个数字，但当2*5出现时就会产生0,0不是我们要的，所以此题入手点就是要统计阶乘中2和5的因子个数
+进而判断出末尾0，将影响末尾数字的因子单独进行乘法运算
+在每次做乘法的时候，用mod10来控制res的最后一个，只保留最后一位即可（小技巧）
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+int N;
+/*long long facts(long long n){
+    if(n==1){
+        return 1;
+    }else{
+        return n*facts(n-1);
+    }
+}*/
+int main(){
+    cin>>N;
+    int res=1,d2=0,d5=0;
+    for(int i=1;i<=N;i++){
+        int x=i;
+        while(x%2==0){
+            x=x/2;
+            d2++;
+        }
+        while(x%5==0){
+            x=x/5;
+            d5++;
+        }
+        res=res*x%10;
+    }
+    for(int i=0;i<d2-d5;i++){
+        res=res*2%10;
+    }
+    cout<<res<<endl;
+    return 0;
+}
