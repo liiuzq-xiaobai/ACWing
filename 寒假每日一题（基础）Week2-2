@@ -1,0 +1,102 @@
+/*
+队列实现宽搜，宽搜的优势是可以记录最短距离
+偏移量法记录走步
+时间复杂度O（n*m）
+*/
+/*#include <iostream>
+#include <algorithm>
+#include <queue>
+#define x first//将pair.first和.second进行修改为x和y
+#define y second
+using namespace std;
+const int MAX=25;
+typedef pair<int,int> PII;//用于记录点的坐标
+int n,m;
+char w[MAX][MAX];
+
+int bfs(int sx,int sy){
+    queue<PII> q;
+    //起点入队
+    q.push({sx,sy});
+    w[sx][sy]='#';
+    int count=0;
+    
+    int dx[]={-1,0,1,0};
+    int dy[]={0,1,-0,-1};
+    while(q.size()){
+        auto t=q.front();//取出队头结点，同时计数count++
+        q.pop();
+        count++;
+        for(int i=0;i<4;i++){//偏移量法向四个方向进行遍历走步情况
+            int x=t.x+dx[i];
+            int y=t.y+dy[i];
+            if(x<0||x>=n||y<0||y>=m||w[x][y]!='.'){//碰墙或者碰到已走过的点
+                continue;
+            }
+            w[x][y]='#';
+            q.push({x,y});
+        }
+    }
+    return count;
+}
+int main(){
+    while(cin>>m>>n,n||m){//此写法是先执行cin，执行后判断n和m，满足的话执行循环体内，不满足退出循环
+        int nx,ny;//初始人的位置
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                cin>>w[i][j];
+                if(w[i][j]=='@'){
+                   nx=i;
+                   ny=j;
+                }
+            }
+        }
+        cout<<bfs(nx,ny)<<endl;
+    }
+
+    return 0;
+    
+}*/
+/*
+深搜，优势在于方便，但可能会出现爆栈
+时间复杂度O（n*m）
+*/
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+const int MAX=25;
+
+int n,m;
+char w[MAX][MAX];
+int dfs(int sx,int sy){
+    int count=1;
+    w[sx][sy]='#';
+    int dx[]={-1,0,1,0};
+    int dy[]={0,1,0,-1};
+    for(int i=0;i<4;i++){
+        int x=sx+dx[i];
+        int y=sy+dy[i];
+        if(x>=0&&x<n&&y>=0&&y<m&&w[x][y]=='.'){
+            count=count+dfs(x,y);
+        }
+    }
+    return count;
+}
+int main(){
+    while(cin>>m>>n,n||m){//此写法是先执行cin，执行后判断n和m，满足的话执行循环体内，不满足退出循环
+        int nx,ny;//初始人的位置
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                cin>>w[i][j];
+                if(w[i][j]=='@'){
+                   nx=i;
+                   ny=j;
+                }
+            }
+        }
+        cout<<dfs(nx,ny)<<endl;
+    }
+
+    return 0;
+}
