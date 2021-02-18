@@ -1,0 +1,42 @@
+/*
+二维递推
+从一维最大值推出二维
+一维递推式：f[i]代表以第i个元素为结尾的最大和,w[i]为第i个元素
+f[i]=max(f[i-1]+w[i],w[i])
+推广到二维后只需要枚举以下上下边界即可
+但是在枚举的时候w[i]在一维时对应的元素在二维中应对应的是i这个位置上这一列到这一元素的元素和->所以需要数据预处理
+*/
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+const int N=110;
+
+int n;
+int s[N][N];
+
+int main(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            int x;
+            cin>>x;
+            s[i][j]=s[i-1][j]+x;//数据预处理，求列的前缀和
+        }
+    }
+    int res=-1000;
+    for(int i=1;i<=n;i++){
+        for(int j=i;j<=n;j++){
+            int f=0;
+            for(int k=1;k<=n;k++){
+                int w=s[j][k]-s[i-1][k];//当前以i到j为上下边界中第k个元素
+                f=max(f,0)+w;//递推式
+                res=max(res,f);//保留最大值
+            }
+        }
+    }
+    cout<<res<<endl;
+    return 0;
+}
