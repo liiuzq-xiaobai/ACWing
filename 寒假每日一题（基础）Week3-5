@@ -1,0 +1,48 @@
+/*
+暴搜
+核心：dfs，对于能否落子的判断，恢复现场，递归搜索树如何执行
+扩展：166 数独1
+      169 数独2 
+      183 靶型数独
+Dancing Links精确覆盖
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N=15;
+int n;
+bool col[N],dg[N*2],udg[N*2];
+int path[N];
+int res;
+
+void dfs(int x){//x表示搜索的行数
+     if(x>n){
+         res++;
+         if(res<=3){
+             for(int i=1;i<=n;i++){
+                 cout<<path[i]<<" ";
+             }
+             cout<<endl;
+         }
+         return;
+     }
+
+     for(int y=1;y<=n;y++){
+         if(!col[y]&&!dg[x+y]&&!udg[x-y+n]){//判定能否落子，斜方向上y=x+b和y=-x+b，对b进行编号，所以b=y-x和b=x+y
+             path[x]=y;
+             col[y]=dg[x+y]=udg[x-y+n]=true;
+             dfs(x+1);
+             col[y]=dg[x+y]=udg[y-x+n]=false;//恢复现场
+             path[x]=0;
+         }
+     }
+}
+int main(){
+    cin>>n;
+    dfs(1);
+    cout<<res<<endl;
+    return 0;
+}
