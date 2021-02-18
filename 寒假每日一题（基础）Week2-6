@@ -1,0 +1,79 @@
+/*
+朴素法，直接遍历
+时间复杂度：O（n）
+*/
+/*#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+int l,m;
+const int MAX=10010;
+bool a[MAX];
+int main(){
+    cin>>l>>m;
+    int count=0;
+    for(int i=0;i<=l;i++){
+        a[i]=true;
+    }
+    while(m--){
+        int x1,x2;
+        cin>>x1>>x2;
+        for(int i=x1;i<=x2;i++){
+            a[i]=false;
+        }
+    }
+    for(int i=0;i<=l;i++){
+        if(a[i]==true){
+            count=count+1;
+        }
+    }
+    cout<<count<<endl;
+    return 0;
+}*/
+/*区间合并法
+核心思想就是先将所有区间按照左端点进行排序，然后先取出第一个区间，比较其右端点和后续区间的左端点
+如果后续左端点小于初始的右端点，则合并
+否则将初始选定的区间释放，取其下一个区间的右端点，重新开始上述步骤，直到所有区间扫描完毕。
+
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
+
+using namespace std;
+int l,m;
+const int MAX=100;
+struct Segment
+{
+    int l,r;
+    bool operator< (const Segment& t)const//重载比较方式，否则无法实现sort
+    {
+        return l<t.l;
+    }    
+}seg[MAX];
+int main(){
+    cin>>l>>m;
+    for(int i=0;i<m;i++){
+        cin>>seg[i].l>>seg[i].r;
+    }
+    sort(seg,seg+m);
+    
+    int sum=0;
+    int L=seg[0].l;
+    int R=seg[0].r;
+    for(int i=1;i<m;i++){
+        if(seg[i].l<=R){
+            R=max(R,seg[i].r);//考虑到比较时初始右端点的确大于待合并区域的左端点，但待比较区域的右端点是否小于初始右端点并不知道，所以要取max
+        }else{//更换至下一个区间进行比较
+            sum=sum+R-L+1;
+            L=seg[i].l;
+            R=seg[i].r;
+        }
+    }
+    sum=sum+R-L+1;//sum是种数数量
+    cout<<l+1-sum<<endl;
+    return 0;
+}
