@@ -1,0 +1,42 @@
+/*
+以每个人的身高进行全局枚举(设每个人都可能是最高高度的人)，确定好h(k)->最高高度人的身高，h(k)左右分别求以h(k)为尾的最大上升子序列和以h(k)为首的最大下降子序列
+求上升和下降最大子序列用DP(O(n))或者贪心(O(nlogn))
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=110;
+int N;
+int a[MAX];
+int f[MAX];//以i开头的最长上升子序列长度
+int g[MAX];//以i开头的最长下降子序列长度
+int main(){
+    cin>>N;
+    for(int i=1;i<=N;i++){
+        cin>>a[i];
+    }
+    for(int i=1;i<=N;i++){//算f[i]
+        f[i]=1;
+        for(int j=1;j<i;j++){//线性DP
+            if(a[j]<a[i]){
+                f[i]=max(f[i],f[j]+1);
+            }
+        }
+    }
+    for(int i=N;i>=1;i--){//算g[i],方向正好与上面反过来，从末尾开始
+        g[i]=1;
+        for(int j=N;j>i;j--){
+            if(a[j]<a[i]){
+                g[i]=max(g[i],g[j]+1);
+            }
+        }
+    }
+    int res=0;
+    for(int k=1;k<=N;k++){
+        res=max(res,f[k]+g[k]-1);
+    }
+    cout<<N-res<<endl;
+    return 0;
+    
+}
