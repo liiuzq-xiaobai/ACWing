@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=105;
+int N;
+int row[MAX],col[MAX];
+int v[MAX][MAX];
+int w[MAX][MAX];
+int res[MAX];
+
+int DP(int row,int col){
+    w[0][0]=v[0][0];
+    for(int i=1;i<col;i++){
+        w[0][i]=w[0][i-1]+v[0][i];
+    }
+    for(int i=1;i<row;i++){
+        w[i][0]=w[i-1][0]+v[i][0];
+    }
+    for(int i=1;i<row;i++){
+        for(int j=1;j<col;j++){
+            w[i][j]=max(w[i-1][j],w[i][j-1])+v[i][j];
+        }
+    }
+    return w[row-1][col-1];
+}
+int main(){
+    cin>>N;
+    for(int i=0;i<N;i++){
+        cin>>row[i]>>col[i];
+        for(int j=0;j<row[i];j++){
+            for(int k=0;k<col[i];k++){
+                cin>>v[j][k];
+            }
+            res[i]=DP(row[i],col[i]);
+        }
+        /*for(int j=0;j<row[i];j++){
+            for(int k=0;k<col[i];k++){
+                cout<<w[j][k]<<" ";
+            }
+            cout<<endl;
+        }*/
+    }
+    for(int i=0;i<N;i++){
+        cout<<res[i]<<endl;
+    }
+    return 0;
+}
