@@ -1,0 +1,24 @@
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+string s;
+int main(){
+    cin>>s;
+    reverse(s.begin(),s.end());
+    if(s.back()=='-'){
+        cout<<'-';
+        s.pop_back();//将末尾符号pop掉，方便后续对数字位数进行统计
+    }
+    int k=0;
+    while(k+1<s.size()&&s[k]=='0'){//k+1是为了排除输入为0的情况，0的时候k+1直接越界
+        k++;
+    }
+    while(k<s.size()){
+        cout<<s[k];
+        k++;
+    }
+    return 0;
+}
