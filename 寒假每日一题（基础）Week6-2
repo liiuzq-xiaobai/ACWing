@@ -1,0 +1,51 @@
+/*
+快排+去重
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=1010;
+int num;
+int a[MAX];
+
+void quick_sort(int q[], int L, int R){
+
+    if(L >= R) return;
+
+    int x = q[L], i = L - 1, j = R + 1;
+    while(i < j){
+        do i ++; while(q[i] < x);
+        do j --; while(q[j] > x);
+        if(i < j) swap(q[i], q[j]);
+    }
+
+    quick_sort(q, L, j);
+    quick_sort(q, j + 1, R);
+}
+int main(){
+    cin>>num;
+    for(int i=0;i<num;i++){
+        cin>>a[i];
+    }
+    int count=num;
+    quick_sort(a,0,num-1);
+    /*for(int i=0;i<count;i++){
+        cout<<a[i]<<" ";
+    }
+    cout<<endl;*/
+    for(int i=0;i<count;i++){
+        if(a[i]==a[i+1]){
+            for(int j=i;j<count;j++){
+                a[j]=a[j+1];
+            }
+            count--;
+            i--;
+        }
+    }
+    cout<<count<<endl;
+    for(int i=0;i<count;i++){
+        cout<<a[i]<<" ";
+    }
+    return 0;
+}
