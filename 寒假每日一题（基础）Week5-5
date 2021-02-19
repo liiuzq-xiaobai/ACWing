@@ -1,0 +1,35 @@
+#include<iostream>
+#include<cstring>
+
+
+using namespace std;
+
+string num;
+
+int main(){
+    cin>>num;
+    //cout<<num<<endl;
+    int temp;
+    int j=1;
+    for(int i=0;i<13;i++){
+        if(num[i]=='-'){
+            continue;
+        }else if(i!=12){
+            temp=temp+(num[i]-'0')*j;
+            //cout<<temp<<endl;
+            j++;
+        }else{
+            temp=temp%11;
+            if(temp==10&&num[i]!='X'){
+                num[i]='X';
+                cout<<num<<endl;
+            }else if(temp!=10&&num[i]!=(temp+'0')){
+                num[i]=temp+'0';
+                cout<<num<<endl;
+            }else{
+                cout<<"Right"<<endl;
+            }
+        }
+    }
+    return 0;
+}
