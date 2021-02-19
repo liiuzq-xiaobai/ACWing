@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+#include<stack>
+
+using namespace std;
+
+string num[10]={"zero","one","two","three","four","five","six","seven","eight","nine"};
+string str;
+int main(){
+    cin>>str;
+    int tmp=0;
+    for(int i=0;i<str.size();i++){
+        tmp=tmp+str[i]-'0';
+    }
+    //cout<<tmp;
+    if(tmp==0){
+        cout<<"zero"<<endl;
+    }else{
+        stack<string> s;
+        while(tmp){
+            int a=0;
+            a=tmp%10;
+            s.push(num[a]);
+            tmp=tmp/10;
+        }
+        while(!s.empty()){
+            cout<<s.top()<<" ";
+            s.pop();
+        }
+    }
+    return 0;
+}
