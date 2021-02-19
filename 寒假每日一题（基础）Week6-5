@@ -1,0 +1,22 @@
+/*
+枚举 但是注意从小到大枚举因子，因为约数是成对出现的，所以先枚举出最小的因子，然后反推出最大因子
+这里有一个简单的数学证明就是当你从最小的因子开始枚举的时候，找到了对应的最小因子反推出的最大因子一定是质数
+*/
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+long long  n;
+
+int main(){
+    cin>>n;
+    for(int i=2;i<n;i++){
+        if(n%i==0){
+            cout<<n/i<<endl;
+            break;
+        }
+    }
+    return 0;
+}
