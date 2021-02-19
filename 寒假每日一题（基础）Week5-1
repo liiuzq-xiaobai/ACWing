@@ -1,0 +1,58 @@
+/*
+DP 01背包 状态转移方程：a[i][j]=max(a[i-1][j],a[i-1][j-v[i]]+w[i]*v[i])
+*/
+/*
+二维没有空间优化
+*/
+/*#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=30005;
+int N;
+int m;
+int v[MAX];
+int w[MAX];
+int a[30][MAX];
+int main(){
+    cin>>N>>m;
+    for(int i=1;i<=m;i++){
+        cin>>v[i]>>w[i];
+    }
+    for(int i=1;i<=m;i++){
+        for(int j=0;j<=N;j++){
+            a[i][j]=a[i-1][j];
+            if(j>=v[i]){
+                a[i][j]=max(a[i-1][j],a[i-1][j-v[i]]+w[i]*v[i]);
+            }
+        }
+    }
+    cout<<a[m][N]<<endl;
+    return 0;
+}*/
+/*
+优化到一维
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=30005;
+int N;
+int m;
+int v[MAX];
+int w[MAX];
+int a[MAX];
+int main(){
+    cin>>N>>m;
+    for(int i=1;i<=m;i++){
+        cin>>v[i]>>w[i];
+    }
+    for(int i=1;i<=m;i++){
+        for(int j=N;j>=v[i];j--){
+            a[j]=max(a[j],a[j-v[i]]+w[i]*v[i]);//a[j-v[i]]比a[j]后算出来，a[j-v[i]]未更改前保留的是a[i-1][j-v[i]]
+        }
+    }
+    cout<<a[N]<<endl;
+    return 0;
+}
