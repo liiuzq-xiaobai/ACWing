@@ -1,0 +1,72 @@
+/*
+偏移量法走步+宽搜
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <queue>
+
+#define x first
+#define y second
+using namespace std;
+
+typedef pair<int,int> PII;
+const int MAX=205;
+int R,C;
+char map[MAX][MAX];
+int dist[MAX][MAX];
+
+int bfs(PII start){
+    queue<PII> q;
+    memset(dist,-1,sizeof dist);
+    q.push(start);
+    dist[start.x][start.y]=0;
+    
+    int dx[]={-1,0,1,0};
+    int dy[]={0,1,0,-1};
+    
+    while(q.size()){
+        auto t=q.front();
+        q.pop();
+        for(int i=0;i<4;i++){
+            PII temp;
+            int tx=t.x+dx[i];
+            int ty=t.y+dy[i];
+            temp.x=tx;
+            temp.y=ty;
+            if(tx>=0&&tx<R&&ty>=0&&ty<C&&dist[tx][ty]==-1&&map[tx][ty]!='#'){
+                dist[tx][ty]=dist[t.x][t.y]+1;
+                if(map[tx][ty]=='E'){
+                    return dist[tx][ty];
+                }
+                q.push(temp);
+            }
+        }
+    }
+    return -1;
+}
+
+int main(){
+    int T;
+    cin>>T;
+    while(T--){
+        cin>>R>>C;
+        PII start;
+        for(int i=0;i<R;i++){
+            for(int j=0;j<C;j++){
+                cin>>map[i][j];
+                if(map[i][j]=='S'){
+                    start.x=i;
+                    start.y=j;
+                }
+            }
+        }
+        int res=bfs(start);
+        if(res==-1){
+            cout<<"oop!"<<endl;
+        }else{
+            cout<<res<<endl;
+        }
+    }
+    return 0;
+}
