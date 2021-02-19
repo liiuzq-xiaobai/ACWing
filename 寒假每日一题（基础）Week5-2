@@ -1,0 +1,85 @@
+/*
+暴力枚举，用一个bool数组来记录是否在一行一列一个方格中有相同元素
+在枚举小方格时，依靠小方格左上角的坐标为基坐标（外层双循环），用偏移量法来枚举小方格内的方格（内层双循环）
+*/
+#include<bits/stdc++.h>
+
+using namespace std;
+
+const int MAX=40;
+
+int n,m;
+int w[MAX][MAX];
+bool st[MAX];
+
+bool check_row(){
+    for(int i=0;i<m;i++){
+        memset(st,0,sizeof st);//将记录是否存在的bool数组进行清零更新，每新检查一行一列或者一个小方格就要执行一次
+        for(int j=0;j<m;j++){
+            int t=w[i][j];
+            if(t<1||t>m){
+                return false;
+            }
+            if(st[t]){
+                return false;
+            }
+            st[t]=true;
+        }
+    }
+    return true;
+}
+bool check_col(){
+    for(int i=0;i<m;i++){
+        memset(st,0,sizeof st);
+        for(int j=0;j<m;j++){
+            int t=w[j][i];
+            if(t<1||t>m){
+                return false;
+            }
+            if(st[t]){
+                return false;
+            }
+            st[t]=true;
+        }
+    }
+    return true;
+}
+bool check_box(){
+    for(int x=0;x<m;x=x+n){
+        for(int y=0;y<m;y=y+n){
+            memset(st,0,sizeof st);
+            for(int dx=0;dx<n;dx++){//偏移量法枚举小方格
+                for(int dy=0;dy<n;dy++){
+                    int t=w[x+dx][y+dy];
+                    if(t<1||t>m){
+                        return false;
+                    }
+                    if(st[t]){
+                        return false;
+                    }
+                    st[t]=true;
+                }
+            }
+        }
+    }
+    return true;
+}
+int main(){
+    int t;
+    cin>>t;
+    for(int C=1;C<=t;C++){
+        cin>>n;
+        m=n*n;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<m;j++){
+                cin>>w[i][j];
+            }
+        }
+        if(check_row()&&check_col()&&check_box()){
+            cout<<"Case #"<<C<<": Yes"<<endl;
+        }else{
+            cout<<"Case #"<<C<<": No"<<endl;
+        }
+    }
+    return 0;
+}
