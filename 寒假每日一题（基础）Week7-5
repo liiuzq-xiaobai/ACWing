@@ -1,0 +1,27 @@
+/*
+两侧值与中间值做差后乘积小于0则为折点：(a[i-1]-a[i])*(a[i]-a[i+1])<0
+*/
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+using namespace std;
+
+int n;
+const int MAX=1005;
+int a[MAX];
+
+int main(){
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    int res=0;
+    for(int i=1;i<n-1;i++){
+        if((a[i-1]-a[i])*(a[i]-a[i+1])<0){
+            res++;
+        }
+    }
+    cout<<res;
+    return 0;
+}
