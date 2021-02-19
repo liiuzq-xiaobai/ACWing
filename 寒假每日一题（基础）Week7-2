@@ -1,0 +1,40 @@
+/*
+本题核心思想：某一斜行可用x+y=n来表示，n确定，一个斜行就确定，n从2开始一直到2n逐个斜行用i枚举
+奇数行，即i为奇数时，方向是左下到右上，j从1开始，print(a[j][i-j]),j++
+偶数行，即i为偶数时，方向是右上到左下, j从i-1开始，print(a[j][i-j])j--
+*/
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+const int MAX=510;
+int n;
+int a[MAX][MAX];
+
+int main(){
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            scanf("%d",&a[i][j]);
+        }
+    }
+    for(int i=2;i<=2*n;i++){//枚举行and列的和，第一个即是1+1=2，最后一个位置是n+n=2n,i=x+y,j=x
+        if(i%2){//奇数行
+            for(int j=1;j<i;j++){
+                if(j>=1&&j<=n&&i-j>=1&&i-j<=n){
+                    printf("%d ",a[j][i-j]);
+                }
+            }
+        }
+        else{//偶数行
+            for(int j=i-1;j;j--){
+                if(j>=1&&j<=n&&i-j>=1&&i-j<=n){
+                    printf("%d ",a[j][i-j]);
+                }
+            }
+        }
+    }
+    return 0;
+}
