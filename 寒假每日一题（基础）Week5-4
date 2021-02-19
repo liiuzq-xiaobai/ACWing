@@ -1,0 +1,29 @@
+/*
+反复平方法 快速幂 记忆模板
+*/
+#include<iostream>
+
+using namespace std;
+
+typedef long long LL;
+LL n,m;
+LL v;
+int quickmi(int a,int b,int c){//a为底，b为指数，c为除数
+    int res=1%c;
+    while(b){
+        if(b&1){
+            res=(LL)res*a%c;
+        }
+        a=(LL)a*a%c;
+        b=b>>1;
+    }
+    return res;
+    
+}
+int main(){
+    cin>>n;
+    cin>>m;
+    cin>>v;
+    cout<<quickmi(n,m,v)<<endl;
+    return 0;
+}
