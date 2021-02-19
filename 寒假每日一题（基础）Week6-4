@@ -1,0 +1,27 @@
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+int l,r;
+
+int check(int num){
+    int count=0;
+    while(num){
+        if(num%10==2){
+            count++;
+        }
+        num=num/10;
+    }
+    return count;
+}
+int main(){
+    cin>>l>>r;
+    int res=0;
+    for(int i=l;i<=r;i++){
+        res=res+check(i);
+    }
+    cout<<res<<endl;
+    return 0;
+}
