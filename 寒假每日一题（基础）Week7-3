@@ -1,0 +1,33 @@
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+
+using namespace std;
+
+int n;
+const int MAX=105;
+int m[MAX][MAX];
+int main(){
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int x1,y1;
+        int x2,y2;
+        cin>>x1>>y1;
+        cin>>x2>>y2;
+        for(int a=x1;a<x2;a++){
+            for(int b=y1;b<y2;b++){
+                m[a][b]=1;
+            }
+        }
+    }
+    int count=0;
+    for(int i=0;i<=100;i++){
+        for(int j=0;j<=100;j++){
+            if(m[i][j]==1){
+                count++;
+            }
+        }
+    }
+    cout<<count<<endl;
+    return 0;
+}
